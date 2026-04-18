@@ -21,6 +21,7 @@ class TurtleNavigationNode(Node):
         ]
 
         self.current_goal_index = 0
+        self.last_debug = 0
 
         # Publishers
         self.initial_pose_publisher = self.create_publisher(
@@ -41,7 +42,7 @@ class TurtleNavigationNode(Node):
     def publish_initial_pose(self):
         initial_pose = PoseWithCovarianceStamped()
         initial_pose.header.frame_id = 'map'
-        initial_pose.pose.pose.position.x = -2.0
+        initial_pose.pose.pose.position.x = -0.5
         initial_pose.pose.pose.position.y = -0.5
 
         quaternion = tf_transformations.quaternion_from_euler(0, 0, 0)
@@ -56,9 +57,17 @@ class TurtleNavigationNode(Node):
         current_pose = msg.pose.pose
         goal_pose = self.goal_poses[self.current_goal_index]
 
+        offset = (2, 2)
+
+        if time.time() - self.last_debug >= 1:
+            self.get_logger().info("odom cb: {}, {}; {}, {}".format(
+                current_pose.position.x + offset[0], goal_pose['x'],
+                current_pose.position.y + offset[1], goal_pose['y']))
+            self.last_debug = time.time()
+
         distance_to_goal = math.sqrt(
-            (current_pose.position.x - goal_pose['x']) ** 2 +
-            (current_pose.position.y - goal_pose['y']) ** 2
+            (current_pose.position.x + offset[0] - goal_pose['x']) ** 2 +
+            (current_pose.position.y + offset[1] - goal_pose['y']) ** 2
         )
 
         if distance_to_goal < 0.3:  # Threshold to consider the goal reached
@@ -88,7 +97,7 @@ class TurtleNavigationNode(Node):
 
         time.sleep(0.5)
         self.goal_pose_publisher.publish(pose_msg)
-        self.get_logger().info(f"Published goal {self.current_goal_index + 1}")
+        self.get_logger().info(f"Published goal {self.current_goal_index + 1}: ({goal['x']:.2f}, {goal['y']:.2f})")
 
 def main(args=None):
     rclpy.init(args=args)
