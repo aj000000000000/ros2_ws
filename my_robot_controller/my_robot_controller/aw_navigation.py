@@ -34,19 +34,19 @@ class AWNavigationNode(Node):
         ############# [Initial Location] ############
         initial_pose = PoseWithCovarianceStamped()
         initial_pose.header.frame_id = 'map'
-        initial_pose.pose.pose.position.x = 3694.65
-        initial_pose.pose.pose.position.y = 73736.72
+        initial_pose.pose.pose.position.x = 3754.30224609375
+        initial_pose.pose.pose.position.y = 73737.109375
         initial_pose.pose.pose.orientation.x = 0.0
         initial_pose.pose.pose.orientation.y = 0.0
-        initial_pose.pose.pose.orientation.z = -0.52
-        initial_pose.pose.pose.orientation.w = 0.85
+        initial_pose.pose.pose.orientation.z = -0.96263983175502
+        initial_pose.pose.pose.orientation.w = 0.27078507033931304
         
         time.sleep(5)
         self.initial_pose_publisher.publish(initial_pose)
         # Initialize goal poses as dictionaries {x, y, w}
 
-        self.goal_poses.append({'x': 3797.35, 'y': 73712.72, 'z': 0.24, 'w': 0.97})
-        self.goal_poses.append({'x': 3755.95, 'y': 73765.02, 'z': -0.5, 'w': 0.86})
+        self.goal_poses.append({'x': 3716.5, 'y': 73754.24, 'z': 0.2, 'w': 0.979})
+        self.goal_poses.append({'x': 3754.726, 'y': 73737.2, 'z': -0.97, 'w': 0.22})
 
         
         

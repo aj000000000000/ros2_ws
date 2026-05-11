@@ -16,3 +16,9 @@ yea
 2. Build the workspace and set up environment: `./build_ws.sh`
 3. Run the navigation process: `ros2 launch my_robot_controller run_navigation.launch.py`
 4. Observe (in rviz) how the robot navigates through the predefined waypoints
+
+## How to use (Autoware navigation)
+
+1. Build the workspace and set up environment: `./build_ws.sh`
+2. Run the navigation process: `ros2 launch my_robot_controller car_nav.launch.py`
+3. Observe the car driving autonomously in autoware
